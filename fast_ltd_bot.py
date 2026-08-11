@@ -134,6 +134,17 @@ USCITA MAX 70' MAI OLTRE
 import os
 port = int(os.environ.get("PORT", 10000))
 threading.Thread(target=lambda: app.run(host="0.0.0.0", port=port)).start()
-main()
+ORARI = [9, 12, 15]
+inviati = set()
+
 while True:
-    time.sleep(3600)
+    now = datetime.now()
+    ora = now.hour
+    key = f"{now.date()}-{ora}"
+    
+    if ora in ORARI and now.minute == 0 and key not in inviati:
+        print(f"Sono le {ora}:00 - mando segnali!")
+        main()
+        inviati.add(key)
+    
+    time.sleep(60
