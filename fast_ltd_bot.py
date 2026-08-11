@@ -138,3 +138,10 @@ if __name__ == "__main__":
     main()
     while True:
         time.sleep(3600)
+    import os
+    port = int(os.environ.get("PORT", 10000))
+    threading.Thread(target=lambda: app.run(host="0.0.0.0", port=port)).start()
+    main()
+    while True:
+        time.sleep(3600)
+if **name** == "**main**":
