@@ -126,7 +126,7 @@ Under 2.5 1T: {stats_combinate['under25_ht']:.0f}%
 • Ingresso pre-match 3.20-5.00
 • Segui ritmo 1T
 • Se gol 15-35' gestisci profitto
-• USCITA MAX 70' MAI OLTRE
+USCITA MAX 70' MAI OLTRE
 """
             print(msg)
             send_telegram(msg)
