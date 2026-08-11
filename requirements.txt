@@ -1,0 +1,6 @@
+requests==2.31.0
+python-telegram-bot==20.7
+betfairlightweight==2.16.0
+
+# Per API-Football:
+# pip install api-sports
