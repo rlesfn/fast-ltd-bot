@@ -12,7 +12,7 @@ def home():
 #Sezione 1: Filtri obbligatori ultime 10
 #Sezione 2: Valutazione stelle
 #Sezione 3: Gestione LTD
-"""
+
 
 import requests
 from datetime import datetime
