@@ -126,12 +126,12 @@ Under 2.5 1T: {stats_combinate['under25_ht']:.0f}%
 • USCITA MAX 70' MAI OLTRE
 """
             print(msg)
-            # send_telegram(msg)
+            send_telegram(msg)
 
 if __name__ == "__main__":
-    # Trucco per restare gratis su Render - finge di essere un sito
     import os
     port = int(os.environ.get("PORT", 10000))
-    threading.Thread(target=lambda: app.run(host="0.0.0.0", port=port), daemon=True).start()
+    threading.Thread(target=lambda: app.run(host="0.0.0.0", port=port)).start()
     main()
-
+    while True:
+        time.sleep(3600)
