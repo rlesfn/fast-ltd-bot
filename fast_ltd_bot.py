@@ -1,4 +1,9 @@
-"""
+
+from flask import Flask
+import threading
+app = Flask(__name__)
+@app.route('/')
+def home(): return "Bot Online!
 FAST - ALGORITMO LTD 70' - BOT AUTOMATICO
 Obiettivo: trova partite con gol 1T 15'-35' per LTD fino max 70'
 
@@ -123,4 +128,9 @@ Under 2.5 1T: {stats_combinate['under25_ht']:.0f}%
             # send_telegram(msg)
 
 if __name__ == "__main__":
+    # Trucco per restare gratis su Render - finge di essere un sito
+    import os
+    port = int(os.environ.get("PORT", 10000))
+    threading.Thread(target=lambda: app.run(host="0.0.0.0", port=port), daemon=True).start()
     main()
+
