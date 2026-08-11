@@ -147,4 +147,4 @@ while True:
         main()
         inviati.add(key)
     
-    time.sleep(60
+    time.sleep(60)
