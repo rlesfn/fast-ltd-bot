@@ -3,14 +3,15 @@ from flask import Flask
 import threading
 app = Flask(__name__)
 @app.route('/')
-def home(): return "Bot Online!
-FAST - ALGORITMO LTD 70' - BOT AUTOMATICO
-Obiettivo: trova partite con gol 1T 15'-35' per LTD fino max 70'
+def home():
+    return "Bot Online!"
+#FAST - ALGORITMO LTD 70' - BOT AUTOMATICO
+#Obiettivo: trova partite con gol 1T 15'-35' per LTD fino max 70'
 
-Logica 100% fedele allo schema foto:
-Sezione 1: Filtri obbligatori ultime 10
-Sezione 2: Valutazione stelle
-Sezione 3: Gestione LTD
+#Logica 100% fedele allo schema foto:
+#Sezione 1: Filtri obbligatori ultime 10
+#Sezione 2: Valutazione stelle
+#Sezione 3: Gestione LTD
 """
 
 import requests
