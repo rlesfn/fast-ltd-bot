@@ -13,12 +13,12 @@ HEADERS = {"x-apisports-key": API_KEY}
 CACHE = {}
 
 @app.route('/')
-def home(): 
-    return f"BOT WORLD LIVE! API KEY: {bool(API_KEY)} - Tutte le leghe attive!"
+def home():
+    return f"BOT WORLD LIVE! API KEY: {bool(API_KEY)} - ORE 12:00 ONLY - FIXED!"
 
 @app.route('/test')
 def test():
-    requests.post(f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": "✅ TEST OK BOT WORLD!"})
+    requests.post(f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage", json={"chat_id": CHAT_ID, "text": "✅ TEST OK BOT WORLD ORE 12!"})
     return "Test inviato!"
 
 @app.route('/test-scan')
@@ -41,7 +41,6 @@ def get_stats(team_id, is_home):
             if tot>=1: over+=1
             if tot<=2: under+=1
             media_list.append(tot)
-            # home/away
             if is_home and f['teams']['home']['id']==team_id and tot>=1: spec+=1
             if not is_home and f['teams']['away']['id']==team_id and tot>=1: spec+=1
             if (is_home and f['teams']['home']['id']==team_id) or (not is_home and f['teams']['away']['id']==team_id):
@@ -57,12 +56,12 @@ def send(m):
     except: pass
 
 def main_scan():
-    if not API_KEY: send("⚠️ API_FOOTBALL_KEY mancante!"); return
+    if not API_KEY: send("⚠ API_FOOTBALL_KEY mancante!"); return
     today=datetime.now().strftime("%Y-%m-%d")
     try:
         res=requests.get(f"https://v3.football.api-sports.io/fixtures?date={today}", headers=HEADERS, timeout=15).json()
         partite=res.get('response', [])[:50]
-        send(f"🔍 Avvio scansione {today}: {len(partite)} partite trovate (WORLD)")
+        send(f"🔍 Avvio scansione {today}: {len(partite)} partite trovate (WORLD) - ORE 12")
         for f in partite:
             hid=f['teams']['home']['id']; aid=f['teams']['away']['id']
             sh=get_stats(hid,True); time.sleep(0.35)
@@ -73,16 +72,19 @@ def main_scan():
             verdetto="5 STELLE TOP 💣" if over>=85 and sh['spec']>=75 and sa['spec']>=70 else "4 STELLE OK ✅"
             msg=f"🚀 *FAST LTD {verdetto}*\n🕒 {f['fixture']['date'][11:16]} {f['teams']['home']['name']} vs {f['teams']['away']['name']}\n🏆 {f['league']['name']}\nOver 0.5 1T: {over:.0f}% Casa:{sh['spec']:.0f}% Osp:{sa['spec']:.0f}% Media:{media:.2f}"
             send(msg)
-        send(f"✅ Fine scansione WORLD {today}")
+        send(f"✅ Fine scansione WORLD {today} - Prossima domani ore 12")
     except Exception as e: send(f"❌ Errore: {e}")
 
 def scheduler():
     sent=set()
-    for h in [9,12,15,18]:
-        while True:
-            now=datetime.now(); key=f"{now.date()}-{h}"
-            if now.hour==h and now.minute<5 and key not in sent: main_scan(); sent.add(key)
-            time.sleep(60)
+    while True:
+        now=datetime.now()
+        for h in [12]:
+            key=f"{now.date()}-{h}"
+            if now.hour==h and now.minute<5 and key not in sent:
+                main_scan()
+                sent.add(key)
+        time.sleep(60)
 
 threading.Thread(target=scheduler,daemon=True).start()
 
